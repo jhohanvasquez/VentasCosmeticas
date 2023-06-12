@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
 using SistemaVentaCosmeticos.Models;
 using SistemaVentaCosmeticos.Repository.Contratos;
 using System.Linq.Expressions;
@@ -7,17 +8,22 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
 {
     public class RolRepositorio : IRolRepositorio
     {
-        private readonly DBVentaCosmeticosContext _dbContext;
+        private readonly DBVentaCosmeticosContext _context;
 
         public RolRepositorio(DBVentaCosmeticosContext dbContext)
         {
-            _dbContext = dbContext;
+            _context = dbContext;
         }
         public async Task<List<Rol>> Lista()
         {
             try
             {
-                return await _dbContext.Rols.ToListAsync();
+                var query = "SELECT * FROM Rol";
+                using (var connection = _context.CreateConnection())
+                {
+                    var rols = await connection.QueryAsync<Rol>(query);
+                    return rols.ToList();
+                }
             }
             catch
             {

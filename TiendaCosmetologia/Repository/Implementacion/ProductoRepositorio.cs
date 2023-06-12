@@ -1,31 +1,54 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
 using SistemaVentaCosmeticos.Models;
 using SistemaVentaCosmeticos.Repository.Contratos;
+using System.Data;
 using System.Linq.Expressions;
 
 namespace SistemaVentaCosmeticos.Repository.Implementacion
 {
     public class ProductoRepositorio : IProductoRepositorio
     {
-        private readonly DBVentaCosmeticosContext _dbContext;
+        private readonly DBVentaCosmeticosContext _context;
 
         public ProductoRepositorio(DBVentaCosmeticosContext dbContext)
         {
-            _dbContext = dbContext;
-        }
-        public async Task<IQueryable<Producto>> Consultar(Expression<Func<Producto, bool>> filtro = null)
-        {
-            IQueryable<Producto> queryEntidad = filtro == null ? _dbContext.Productos : _dbContext.Productos.Where(filtro);
-            return queryEntidad;
+            _context = dbContext;
         }
 
-        public async Task<Producto> Crear(Producto entidad)
+        public async Task<IEnumerable<Producto>> Consultar(Expression<Func<Producto, bool>> filtro = null)
+        {
+            var query = $@"SELECT * FROM [Usuario]
+                            {{where}}";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var list = await connection.QueryAsync<Producto>(query, filtro);
+                return list;
+            }
+        }
+
+        public async Task<IEnumerable<Producto>> Crear(Producto entidad)
         {
             try
             {
-                _dbContext.Set<Producto>().Add(entidad);
-                await _dbContext.SaveChangesAsync();
-                return entidad;
+                using (var connection = _context.CreateConnection())
+                {
+
+
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("IdProducto", entidad.IdProducto);
+                    parameters.Add("Nombre", entidad.Nombre);
+                    parameters.Add("Color", entidad.Color);
+                    parameters.Add("IdDepartamentoVenta", entidad.IdDepartamentoVenta);
+                    parameters.Add("Stock", entidad.Stock);
+                    parameters.Add("Precio", entidad.Precio);
+                    parameters.Add("EsActivo", entidad.EsActivo);
+                    parameters.Add("FechaRegistro", entidad.FechaRegistro);
+
+                    return await connection.QueryAsync<Producto>("SPCrearProducto", parameters, commandType: CommandType.StoredProcedure);
+
+                }
             }
             catch
             {
@@ -37,9 +60,24 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
         {
             try
             {
-                _dbContext.Update(entidad);
-                await _dbContext.SaveChangesAsync();
-                return true;
+                using (var connection = _context.CreateConnection())
+                {
+
+
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("IdProducto", entidad.IdProducto);
+                    parameters.Add("Nombre", entidad.Nombre);
+                    parameters.Add("Color", entidad.Color);
+                    parameters.Add("IdDepartamentoVenta", entidad.IdDepartamentoVenta);
+                    parameters.Add("Stock", entidad.Stock);
+                    parameters.Add("Precio", entidad.Precio);
+                    parameters.Add("EsActivo", entidad.EsActivo);
+                    parameters.Add("FechaRegistro", entidad.FechaRegistro);
+
+                    var result = await connection.QueryAsync<Producto>("SPCEditarProducto", parameters, commandType: CommandType.StoredProcedure);
+
+                    return true;
+                }
             }
             catch
             {
@@ -51,9 +89,15 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
         {
             try
             {
-                _dbContext.Remove(entidad);
-                await _dbContext.SaveChangesAsync();
-                return true;
+                using (var connection = _context.CreateConnection())
+                {
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("IdUsuario", entidad.IdProducto);
+
+                    var result = await connection.QueryAsync<Usuario>("SPEliminarUsuario", parameters, commandType: CommandType.StoredProcedure);
+
+                    return true;
+                }
             }
             catch
             {
@@ -61,11 +105,18 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
             }
         }
 
-        public async Task<Producto> Obtener(Expression<Func<Producto, bool>> filtro = null)
+        public async Task<IEnumerable<Producto>> Obtener(Expression<Func<Producto, bool>> filtro = null)
         {
             try
             {
-                return await _dbContext.Productos.Where(filtro).FirstOrDefaultAsync();
+                var query = $@"SELECT * FROM [Usuario]
+                            {{where}}";
+
+                using (var connection = _context.CreateConnection())
+                {
+                    var list = await connection.QueryAsync<Producto>(query, filtro);
+                    return list;
+                }
             }
             catch
             {

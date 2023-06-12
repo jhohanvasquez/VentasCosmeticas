@@ -1,4 +1,5 @@
-﻿using SistemaVentaCosmeticos.Models;
+﻿using Dapper;
+using SistemaVentaCosmeticos.Models;
 using SistemaVentaCosmeticos.Repository.Contratos;
 using System.Globalization;
 
@@ -6,18 +7,21 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
 {
     public class DashBoardRepositorio : IDashBoardRepositorio
     {
-        private readonly DBVentaCosmeticosContext _dbcontext;
+        private readonly DBVentaCosmeticosContext _context;
         public DashBoardRepositorio(DBVentaCosmeticosContext context)
         {
-            _dbcontext = context;
+            _context = context;
         }
         public async Task<int> TotalProductos()
         {
             try
             {
-                IQueryable<Producto> query = _dbcontext.Productos;
-                int total = query.Count();
-                return total;
+                var query = "SELECT * FROM Productos";
+                using (var connection = _context.CreateConnection())
+                {
+                    var companies = await connection.QueryAsync<Producto>(query);
+                    return companies.ToList().Count();
+                }
             }
             catch
             {

@@ -4,6 +4,7 @@ using SistemaVentaCosmeticos.Repository.Contratos;
 using SistemaVentaCosmeticos.Repository.Implementacion;
 using SistemaVentaCosmeticos.Recursos;
 using System;
+using SistemaVentaCosmeticos.Repository.Implementacion.Comun.Satrack.SafeVehicle.Infrastructure.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,8 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMemoryCache();
 
-builder.Services.AddDbContext<DBVentaCosmeticosContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddSingleton<DBVentaCosmeticosContext>();
 
 builder.Services.AddControllersWithViews();
 

@@ -30,8 +30,8 @@ namespace SistemaVentaCosmeticos.Controllers
             try
             {
                 List<ProductoDTO> ListaProductos = new List<ProductoDTO>();
-                IQueryable<Producto> query = await _productoRepositorio.Consultar();
-                query = query.Include(r => r.IdDepartamentoVentaNavigation);
+                IEnumerable<Producto> query = await _productoRepositorio.Consultar();
+                query = query.AsQueryable().Include(r => r.IdDepartamentoVentaNavigation);
 
                 ListaProductos = _mapper.Map<List<ProductoDTO>>(query.ToList());
 
@@ -59,7 +59,7 @@ namespace SistemaVentaCosmeticos.Controllers
             {
                 Producto _producto = _mapper.Map<Producto>(request);
 
-                Producto _productoCreado = await _productoRepositorio.Crear(_producto);
+                Producto _productoCreado = (Producto)await _productoRepositorio.Crear(_producto);
 
                 if (_productoCreado.IdProducto != 0)
                     _response = new Response<ProductoDTO>() { status = true, msg = "ok", value = _mapper.Map<ProductoDTO>(_productoCreado) };
@@ -83,7 +83,7 @@ namespace SistemaVentaCosmeticos.Controllers
             try
             {
                 Producto _producto = _mapper.Map<Producto>(request);
-                Producto _productoParaEditar = await _productoRepositorio.Obtener(u => u.IdProducto == _producto.IdProducto);
+                Producto _productoParaEditar = (Producto)await _productoRepositorio.Consultar(u => u.IdProducto == _producto.IdProducto);
 
                 if (_productoParaEditar != null)
                 {
@@ -123,7 +123,7 @@ namespace SistemaVentaCosmeticos.Controllers
             Response<string> _response = new Response<string>();
             try
             {
-                Producto _productoEliminar = await _productoRepositorio.Obtener(u => u.IdProducto == id);
+                Producto _productoEliminar = (Producto)await _productoRepositorio.Consultar(u => u.IdProducto == id);
 
                 if (_productoEliminar != null)
                 {

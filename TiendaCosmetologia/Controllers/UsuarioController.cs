@@ -29,7 +29,7 @@ namespace SistemaVentaCosmeticos.Controllers
             try
             {
                 List<UsuarioDTO> ListaUsuarios = new List<UsuarioDTO>();
-                IQueryable<Usuario> query = await _usuarioRepositorio.Consultar();
+                IQueryable<Usuario> query = (IQueryable<Usuario>)await _usuarioRepositorio.Consultar();
                 query = query.Include(r => r.IdRolNavigation);
 
                 ListaUsuarios  = _mapper.Map<List<UsuarioDTO>>(query.ToList());
@@ -54,7 +54,7 @@ namespace SistemaVentaCosmeticos.Controllers
             Response<Usuario> _response = new Response<Usuario> ();
             try
             {
-                Usuario _usuario  = await _usuarioRepositorio.Obtener(u => u.Correo == correo && u.Clave == clave);
+                Usuario _usuario  = (Usuario)await _usuarioRepositorio.Obtener(u => u.Correo == correo && u.Clave == clave);
 
                 if (_usuario != null)
                     _response = new Response<Usuario>() { status = true,msg="ok",value = _usuario };
@@ -79,7 +79,7 @@ namespace SistemaVentaCosmeticos.Controllers
             {
                 Usuario _usuario = _mapper.Map<Usuario>(request);
 
-                Usuario _usuarioCreado =   await _usuarioRepositorio.Crear(_usuario);
+                Usuario _usuarioCreado = (Usuario)await _usuarioRepositorio.Crear(_usuario);
 
                 if(_usuarioCreado.IdUsuario != 0)
                     _response = new Response<UsuarioDTO>() { status = true, msg= "ok", value = _mapper.Map<UsuarioDTO>(_usuarioCreado) };
@@ -103,7 +103,7 @@ namespace SistemaVentaCosmeticos.Controllers
             try
             {
                 Usuario _usuario = _mapper.Map<Usuario>(request);
-                Usuario _usuarioParaEditar = await _usuarioRepositorio.Obtener(u => u.IdUsuario == _usuario.IdUsuario);
+                Usuario _usuarioParaEditar = (Usuario)await _usuarioRepositorio.Obtener(u => u.IdUsuario == _usuario.IdUsuario);
 
                 if (_usuarioParaEditar != null)
                 {
@@ -142,7 +142,7 @@ namespace SistemaVentaCosmeticos.Controllers
             Response<string> _response = new Response<string>();
             try
             {
-                Usuario _usuarioEliminar = await _usuarioRepositorio.Obtener(u => u.IdUsuario == id);
+                Usuario _usuarioEliminar = (Usuario)await _usuarioRepositorio.Obtener(u => u.IdUsuario == id);
 
                 if (_usuarioEliminar != null) {
 

@@ -8,7 +8,7 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
     public class VentaRepositorio : IVentaRepositorio
     {
         private readonly DBVentaCosmeticosContext _dbcontext;
-        public VentaRepositorio(DBVentaCosmeticosContext context) 
+        public VentaRepositorio(DBVentaCosmeticosContext context)
         {
             _dbcontext = context;
         }
@@ -17,50 +17,45 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
         {
             Venta VentaGenerada = new Venta();
 
-            //usaremos transacion, ya que si ocurre un error en algun insert a una tabla, debe reestablecer todo a cero, como si no hubo o no existió ningun insert
-            using (var transaction = _dbcontext.Database.BeginTransaction())
-            {
-                int CantidadDigitos = 4;
-                try
-                {
-                    foreach (DetalleVenta dv in entidad.DetalleVenta)
-                    {
-                        Producto producto_encontrado = _dbcontext.Productos.Where(p => p.IdProducto == dv.IdProducto).First();
+            int CantidadDigitos = 4;
+            //try
+            //{
+            //    foreach (DetalleVenta dv in entidad.DetalleVenta)
+            //    {
+            //        Producto producto_encontrado = _dbcontext.Productos.Where(p => p.IdProducto == dv.IdProducto).First();
 
-                        producto_encontrado.Stock = producto_encontrado.Stock - dv.Cantidad;
-                        _dbcontext.Productos.Update(producto_encontrado);
-                    }
-                    await _dbcontext.SaveChangesAsync();
+            //        producto_encontrado.Stock = producto_encontrado.Stock - dv.Cantidad;
+            //        _dbcontext.Productos.Update(producto_encontrado);
+            //    }
+            //    await _dbcontext.SaveChangesAsync();
 
 
-                    NumeroDocumento correlativo = _dbcontext.NumeroDocumentos.First();
+            //    NumeroDocumento correlativo = _dbcontext.NumeroDocumentos.First();
 
-                    correlativo.UltimoNumero = correlativo.UltimoNumero + 1;
-                    correlativo.FechaRegistro = DateTime.Now;
+            //    correlativo.UltimoNumero = correlativo.UltimoNumero + 1;
+            //    correlativo.FechaRegistro = DateTime.Now;
 
-                    _dbcontext.NumeroDocumentos.Update(correlativo);
-                    await _dbcontext.SaveChangesAsync();
+            //    _dbcontext.NumeroDocumentos.Update(correlativo);
+            //    await _dbcontext.SaveChangesAsync();
 
 
-                    string ceros = string.Concat(Enumerable.Repeat("0", CantidadDigitos));
-                    string numeroVenta = ceros + correlativo.UltimoNumero.ToString();
-                    numeroVenta = numeroVenta.Substring(numeroVenta.Length - CantidadDigitos, CantidadDigitos);
+            //    string ceros = string.Concat(Enumerable.Repeat("0", CantidadDigitos));
+            //    string numeroVenta = ceros + correlativo.UltimoNumero.ToString();
+            //    numeroVenta = numeroVenta.Substring(numeroVenta.Length - CantidadDigitos, CantidadDigitos);
 
-                    entidad.NumeroDocumento = numeroVenta;
+            //    entidad.NumeroDocumento = numeroVenta;
 
-                    await _dbcontext.Venta.AddAsync(entidad);
-                    await _dbcontext.SaveChangesAsync();
+            //    await _dbcontext.Venta.AddAsync(entidad);
+            //    await _dbcontext.SaveChangesAsync();
 
-                    VentaGenerada = entidad;
+            //    VentaGenerada = entidad;
 
-                    transaction.Commit();
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    throw;
-                }
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw;
+            //}
+
 
             return VentaGenerada;
         }
