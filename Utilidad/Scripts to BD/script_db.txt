@@ -1,0 +1,177 @@
+﻿
+create database DBVentaCosmeticos
+
+go
+
+USE [DBVentaCosmeticos]
+GO
+/****** Object:  Table [dbo].[DepartamentoVenta]    Script Date: 11/06/2023 10:32:40 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DepartamentoVenta](
+	[idDepartamentoVenta] [int] IDENTITY(1,1) NOT NULL,
+	[descripcion] [varchar](50) NULL,
+	[esActivo] [bit] NULL,
+	[fechaRegistro] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[idDepartamentoVenta] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DetalleVenta]    Script Date: 11/06/2023 10:32:40 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DetalleVenta](
+	[idDetalleVenta] [int] IDENTITY(1,1) NOT NULL,
+	[idVenta] [int] NULL,
+	[idProducto] [int] NULL,
+	[cantidad] [int] NULL,
+	[precio] [decimal](10, 2) NULL,
+	[total] [decimal](10, 2) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[idDetalleVenta] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[NumeroDocumento]    Script Date: 11/06/2023 10:32:40 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[NumeroDocumento](
+	[idNumeroDocumento] [int] IDENTITY(1,1) NOT NULL,
+	[ultimo_Numero] [int] NOT NULL,
+	[fechaRegistro] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[idNumeroDocumento] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Producto]    Script Date: 11/06/2023 10:32:40 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Producto](
+	[idProducto] [int] IDENTITY(1,1) NOT NULL,
+	[idPromocion] [int] NULL,
+	[idDepartamentoVenta] [int] NULL,
+	[nombre] [varchar](100) NULL,
+	[color] [varchar](20) NULL,
+	[stock] [int] NULL,
+	[precio] [decimal](10, 2) NULL,
+	[esActivo] [bit] NULL,
+	[fechaRegistro] [datetime] NULL,
+ CONSTRAINT [PK__Producto__07F4A1320DAF0CB0] PRIMARY KEY CLUSTERED 
+(
+	[idProducto] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Promocion]    Script Date: 11/06/2023 10:32:40 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Promocion](
+	[idPromocion] [int] IDENTITY(1,1) NOT NULL,
+	[Descripcion] [varchar](100) NOT NULL,
+	[Porcentaje] [float] NOT NULL,
+	[Monto] [float] NOT NULL,
+	[esActivo] [bit] NOT NULL,
+ CONSTRAINT [PK_Promocion] PRIMARY KEY CLUSTERED 
+(
+	[idPromocion] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Rol]    Script Date: 11/06/2023 10:32:40 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Rol](
+	[idRol] [int] IDENTITY(1,1) NOT NULL,
+	[descripcion] [varchar](50) NULL,
+	[esActivo] [bit] NULL,
+	[fechaRegistro] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[idRol] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Usuario]    Script Date: 11/06/2023 10:32:40 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Usuario](
+	[idUsuario] [int] IDENTITY(1,1) NOT NULL,
+	[nombreApellidos] [varchar](100) NULL,
+	[correo] [varchar](40) NULL,
+	[idRol] [int] NULL,
+	[clave] [varchar](40) NULL,
+	[esActivo] [bit] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[idUsuario] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Venta]    Script Date: 11/06/2023 10:32:40 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Venta](
+	[idVenta] [int] IDENTITY(1,1) NOT NULL,
+	[numeroDocumento] [varchar](40) NULL,
+	[tipoPago] [varchar](50) NULL,
+	[fechaRegistro] [datetime] NULL,
+	[total] [decimal](10, 2) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[idVenta] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[DepartamentoVenta] ADD  DEFAULT (getdate()) FOR [fechaRegistro]
+GO
+ALTER TABLE [dbo].[NumeroDocumento] ADD  DEFAULT (getdate()) FOR [fechaRegistro]
+GO
+ALTER TABLE [dbo].[Producto] ADD  CONSTRAINT [DF__Producto__fechaR__108B795B]  DEFAULT (getdate()) FOR [fechaRegistro]
+GO
+ALTER TABLE [dbo].[Rol] ADD  DEFAULT (getdate()) FOR [fechaRegistro]
+GO
+ALTER TABLE [dbo].[Venta] ADD  DEFAULT (getdate()) FOR [fechaRegistro]
+GO
+ALTER TABLE [dbo].[DetalleVenta]  WITH CHECK ADD  CONSTRAINT [FK__DetalleVe__idPro__1FCDBCEB] FOREIGN KEY([idProducto])
+REFERENCES [dbo].[Producto] ([idProducto])
+GO
+ALTER TABLE [dbo].[DetalleVenta] CHECK CONSTRAINT [FK__DetalleVe__idPro__1FCDBCEB]
+GO
+ALTER TABLE [dbo].[DetalleVenta]  WITH CHECK ADD FOREIGN KEY([idVenta])
+REFERENCES [dbo].[Venta] ([idVenta])
+GO
+ALTER TABLE [dbo].[Producto]  WITH CHECK ADD  CONSTRAINT [FK_Producto_DepartamentoVenta] FOREIGN KEY([idDepartamentoVenta])
+REFERENCES [dbo].[DepartamentoVenta] ([idDepartamentoVenta])
+GO
+ALTER TABLE [dbo].[Producto] CHECK CONSTRAINT [FK_Producto_DepartamentoVenta]
+GO
+ALTER TABLE [dbo].[Producto]  WITH CHECK ADD  CONSTRAINT [FK_Producto_Promocion] FOREIGN KEY([idPromocion])
+REFERENCES [dbo].[Promocion] ([idPromocion])
+GO
+ALTER TABLE [dbo].[Producto] CHECK CONSTRAINT [FK_Producto_Promocion]
+GO
+ALTER TABLE [dbo].[Usuario]  WITH CHECK ADD FOREIGN KEY([idRol])
+REFERENCES [dbo].[Rol] ([idRol])
+GO
+

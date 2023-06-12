@@ -1,0 +1,12 @@
+C:\Users\jhohan_vasquez\Documents\Visual Studio 2022\TiendaCosmetologia\Utilidad\bin\Debug\net7.0\Utilidad.deps.json
+C:\Users\jhohan_vasquez\Documents\Visual Studio 2022\TiendaCosmetologia\Utilidad\bin\Debug\net7.0\Utilidad.dll
+C:\Users\jhohan_vasquez\Documents\Visual Studio 2022\TiendaCosmetologia\Utilidad\bin\Debug\net7.0\Utilidad.pdb
+C:\Users\jhohan_vasquez\Documents\Visual Studio 2022\TiendaCosmetologia\Utilidad\obj\Debug\net7.0\Utilidad.csproj.AssemblyReference.cache
+C:\Users\jhohan_vasquez\Documents\Visual Studio 2022\TiendaCosmetologia\Utilidad\obj\Debug\net7.0\Utilidad.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jhohan_vasquez\Documents\Visual Studio 2022\TiendaCosmetologia\Utilidad\obj\Debug\net7.0\Utilidad.AssemblyInfoInputs.cache
+C:\Users\jhohan_vasquez\Documents\Visual Studio 2022\TiendaCosmetologia\Utilidad\obj\Debug\net7.0\Utilidad.AssemblyInfo.cs
+C:\Users\jhohan_vasquez\Documents\Visual Studio 2022\TiendaCosmetologia\Utilidad\obj\Debug\net7.0\Utilidad.csproj.CoreCompileInputs.cache
+C:\Users\jhohan_vasquez\Documents\Visual Studio 2022\TiendaCosmetologia\Utilidad\obj\Debug\net7.0\Utilidad.dll
+C:\Users\jhohan_vasquez\Documents\Visual Studio 2022\TiendaCosmetologia\Utilidad\obj\Debug\net7.0\refint\Utilidad.dll
+C:\Users\jhohan_vasquez\Documents\Visual Studio 2022\TiendaCosmetologia\Utilidad\obj\Debug\net7.0\Utilidad.pdb
+C:\Users\jhohan_vasquez\Documents\Visual Studio 2022\TiendaCosmetologia\Utilidad\obj\Debug\net7.0\ref\Utilidad.dll
