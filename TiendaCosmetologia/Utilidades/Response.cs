@@ -1,4 +1,4 @@
-﻿namespace SistemaVentaCosmeticos.Utilidades
+﻿namespace SistemaVentaCosmeticos.Recursos
 {
     public class Response<T>
     {

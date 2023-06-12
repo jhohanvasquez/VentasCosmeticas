@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SistemaVentaCosmeticos.DTOs;
 using SistemaVentaCosmeticos.Models;
 using SistemaVentaCosmeticos.Repository.Contratos;
-using SistemaVentaCosmeticos.Utilidades;
+using SistemaVentaCosmeticos.Recursos;
 
 namespace SistemaVentaCosmeticos.Controllers
 {

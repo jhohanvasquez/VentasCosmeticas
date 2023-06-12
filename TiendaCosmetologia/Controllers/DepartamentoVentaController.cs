@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SistemaVentaCosmeticos.DTOs;
 using SistemaVentaCosmeticos.Repository.Contratos;
-using SistemaVentaCosmeticos.Utilidades;
+using SistemaVentaCosmeticos.Recursos;
 
 namespace SistemaVentaCosmeticos.Controllers
 {

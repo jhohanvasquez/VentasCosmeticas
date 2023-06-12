@@ -3,7 +3,7 @@ using SistemaVentaCosmeticos.DTOs;
 using SistemaVentaCosmeticos.Models;
 using System.Globalization;
 
-namespace SistemaVentaCosmeticos.Utilidades
+namespace SistemaVentaCosmeticos.Recursos
 {
     public class AutoMapperProfile : Profile
     {

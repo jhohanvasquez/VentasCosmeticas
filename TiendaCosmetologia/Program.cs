@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using SistemaVentaCosmeticos.Models;
 using SistemaVentaCosmeticos.Repository.Contratos;
 using SistemaVentaCosmeticos.Repository.Implementacion;
-using SistemaVentaCosmeticos.Utilidades;
+using SistemaVentaCosmeticos.Recursos;
 
 var builder = WebApplication.CreateBuilder(args);
 
