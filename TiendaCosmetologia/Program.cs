@@ -10,11 +10,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-
-builder.Services.AddDbContext<DBVentaCosmeticosContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("sqlConection"));
-});
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
