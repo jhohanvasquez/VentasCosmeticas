@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 namespace SistemaVentaCosmeticos.Models
 {
@@ -26,195 +27,319 @@ namespace SistemaVentaCosmeticos.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+          
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<DepartamentoVenta>(entity =>
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("SistemaVentaCosmeticos.Models.DepartamentoVenta", b =>
             {
-                entity.HasKey(e => e.IdDepartamentoVenta)
+                b.Property<int>("IdDepartamentoVenta")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int")
+                    .HasColumnName("idDepartamentoVenta");
+
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDepartamentoVenta"), 1L, 1);
+
+                b.Property<string>("Descripcion")
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnType("varchar(50)")
+                    .HasColumnName("descripcion");
+
+                b.Property<bool?>("EsActivo")
+                    .HasColumnType("bit")
+                    .HasColumnName("esActivo");
+
+                b.Property<DateTime?>("FechaRegistro")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("datetime")
+                    .HasColumnName("fechaRegistro")
+                    .HasDefaultValueSql("(getdate())");
+
+                b.HasKey("IdDepartamentoVenta")
                     .HasName("PK__Categori__8A3D240CE670682C");
 
-                entity.Property(e => e.IdDepartamentoVenta).HasColumnName("idDepartamentoVenta");
-
-                entity.Property(e => e.Descripcion)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("descripcion");
-
-                entity.Property(e => e.EsActivo).HasColumnName("esActivo");
-
-                entity.Property(e => e.FechaRegistro)
-                    .HasColumnType("datetime")
-                    .HasColumnName("fechaRegistro")
-                    .HasDefaultValueSql("(getdate())");
+                b.ToTable("DepartamentoVenta");
             });
 
-            modelBuilder.Entity<DetalleVenta>(entity =>
+            modelBuilder.Entity("SistemaVentaCosmeticos.Models.DetalleVenta", b =>
             {
-                entity.HasKey(e => e.IdDetalleVenta)
+                b.Property<int>("IdDetalleVenta")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int")
+                    .HasColumnName("idDetalleVenta");
+
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDetalleVenta"), 1L, 1);
+
+                b.Property<int?>("Cantidad")
+                    .HasColumnType("int")
+                    .HasColumnName("cantidad");
+
+                b.Property<int?>("IdProducto")
+                    .HasColumnType("int")
+                    .HasColumnName("idProducto");
+
+                b.Property<int?>("IdVenta")
+                    .HasColumnType("int")
+                    .HasColumnName("idVenta");
+
+                b.Property<decimal?>("Precio")
+                    .HasColumnType("decimal(10,2)")
+                    .HasColumnName("precio");
+
+                b.Property<decimal?>("Total")
+                    .HasColumnType("decimal(10,2)")
+                    .HasColumnName("total");
+
+                b.HasKey("IdDetalleVenta")
                     .HasName("PK__DetalleV__BFE2843FA3FFCC43");
 
-                entity.Property(e => e.IdDetalleVenta).HasColumnName("idDetalleVenta");
+                b.HasIndex("IdProducto");
 
-                entity.Property(e => e.Cantidad).HasColumnName("cantidad");
+                b.HasIndex("IdVenta");
 
-                entity.Property(e => e.IdProducto).HasColumnName("idProducto");
-
-                entity.Property(e => e.IdVenta).HasColumnName("idVenta");
-
-                entity.Property(e => e.Precio)
-                    .HasColumnType("decimal(10, 2)")
-                    .HasColumnName("precio");
-
-                entity.Property(e => e.Total)
-                    .HasColumnType("decimal(10, 2)")
-                    .HasColumnName("total");
-
-                entity.HasOne(d => d.IdProductoNavigation)
-                    .WithMany(p => p.DetalleVenta)
-                    .HasForeignKey(d => d.IdProducto)
-                    .HasConstraintName("FK__DetalleVe__idPro__267ABA7A");
-
-                entity.HasOne(d => d.IdVentaNavigation)
-                    .WithMany(p => p.DetalleVenta)
-                    .HasForeignKey(d => d.IdVenta)
-                    .HasConstraintName("FK__DetalleVe__idVen__25869641");
+                b.ToTable("DetalleVenta");
             });
 
-            modelBuilder.Entity<NumeroDocumento>(entity =>
+            modelBuilder.Entity("SistemaVentaCosmeticos.Models.NumeroDocumento", b =>
             {
-                entity.HasKey(e => e.IdNumeroDocumento)
+                b.Property<int>("IdNumeroDocumento")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int")
+                    .HasColumnName("idNumeroDocumento");
+
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdNumeroDocumento"), 1L, 1);
+
+                b.Property<DateTime?>("FechaRegistro")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("datetime")
+                    .HasColumnName("fechaRegistro")
+                    .HasDefaultValueSql("(getdate())");
+
+                b.Property<int>("UltimoNumero")
+                    .HasColumnType("int")
+                    .HasColumnName("ultimo_Numero");
+
+                b.HasKey("IdNumeroDocumento")
                     .HasName("PK__NumeroDo__471E421A78999DD9");
 
-                entity.ToTable("NumeroDocumento");
-
-                entity.Property(e => e.IdNumeroDocumento).HasColumnName("idNumeroDocumento");
-
-                entity.Property(e => e.FechaRegistro)
-                    .HasColumnType("datetime")
-                    .HasColumnName("fechaRegistro")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.UltimoNumero).HasColumnName("ultimo_Numero");
+                b.ToTable("NumeroDocumento", (string)null);
             });
 
-            modelBuilder.Entity<Producto>(entity =>
+            modelBuilder.Entity("SistemaVentaCosmeticos.Models.Producto", b =>
             {
-                entity.HasKey(e => e.IdProducto)
-                    .HasName("PK__Producto__07F4A1323E322568");
+                b.Property<int>("IdProducto")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int")
+                    .HasColumnName("idProducto");
 
-                entity.ToTable("Producto");
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdProducto"), 1L, 1);
 
-                entity.Property(e => e.IdProducto).HasColumnName("idProducto");
+                b.Property<bool?>("EsActivo")
+                    .HasColumnType("bit")
+                    .HasColumnName("esActivo");
 
-                entity.Property(e => e.EsActivo).HasColumnName("esActivo");
-
-                entity.Property(e => e.FechaRegistro)
+                b.Property<DateTime?>("FechaRegistro")
+                    .ValueGeneratedOnAdd()
                     .HasColumnType("datetime")
                     .HasColumnName("fechaRegistro")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.IdDepartamentoVenta).HasColumnName("idDepartamentoVenta");
+                b.Property<int?>("IdDepartamentoVenta")
+                    .HasColumnType("int")
+                    .HasColumnName("idDepartamentoVenta");
 
-                entity.Property(e => e.Nombre)
+                b.Property<string>("Nombre")
                     .HasMaxLength(100)
                     .IsUnicode(false)
+                    .HasColumnType("varchar(100)")
                     .HasColumnName("nombre");
 
-                entity.Property(e => e.Precio)
-                    .HasColumnType("decimal(10, 2)")
+                b.Property<decimal?>("Precio")
+                    .HasColumnType("decimal(10,2)")
                     .HasColumnName("precio");
 
-                entity.Property(e => e.Stock).HasColumnName("stock");
+                b.Property<int?>("Stock")
+                    .HasColumnType("int")
+                    .HasColumnName("stock");
 
-                entity.HasOne(d => d.IdDepartamentoVentaNavigation)
-                    .WithMany(p => p.Productos)
-                    .HasForeignKey(d => d.IdDepartamentoVenta)
-                    .HasConstraintName("FK__Producto__idCate__1BFD2C07");
+                b.HasKey("IdProducto")
+                    .HasName("PK__Producto__07F4A1323E322568");
+
+                b.HasIndex("IdDepartamentoVenta");
+
+                b.ToTable("Producto", (string)null);
             });
 
-            modelBuilder.Entity<Rol>(entity =>
+            modelBuilder.Entity("SistemaVentaCosmeticos.Models.Rol", b =>
             {
-                entity.HasKey(e => e.IdRol)
-                    .HasName("PK__Rol__3C872F7670BFFF74");
+                b.Property<int>("IdRol")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int")
+                    .HasColumnName("idRol");
 
-                entity.ToTable("Rol");
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdRol"), 1L, 1);
 
-                entity.Property(e => e.IdRol).HasColumnName("idRol");
-
-                entity.Property(e => e.Descripcion)
+                b.Property<string>("Descripcion")
                     .HasMaxLength(50)
                     .IsUnicode(false)
+                    .HasColumnType("varchar(50)")
                     .HasColumnName("descripcion");
 
-                entity.Property(e => e.EsActivo).HasColumnName("esActivo");
+                b.Property<bool?>("EsActivo")
+                    .HasColumnType("bit")
+                    .HasColumnName("esActivo");
 
-                entity.Property(e => e.FechaRegistro)
+                b.Property<DateTime?>("FechaRegistro")
+                    .ValueGeneratedOnAdd()
                     .HasColumnType("datetime")
                     .HasColumnName("fechaRegistro")
                     .HasDefaultValueSql("(getdate())");
+
+                b.HasKey("IdRol")
+                    .HasName("PK__Rol__3C872F7670BFFF74");
+
+                b.ToTable("Rol", (string)null);
             });
 
-            modelBuilder.Entity<Usuario>(entity =>
+            modelBuilder.Entity("SistemaVentaCosmeticos.Models.Usuario", b =>
             {
-                entity.HasKey(e => e.IdUsuario)
-                    .HasName("PK__Usuario__645723A61F6FD7E7");
+                b.Property<int>("IdUsuario")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int")
+                    .HasColumnName("idUsuario");
 
-                entity.ToTable("Usuario");
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdUsuario"), 1L, 1);
 
-                entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
-
-                entity.Property(e => e.Clave)
+                b.Property<string>("Clave")
                     .HasMaxLength(40)
                     .IsUnicode(false)
+                    .HasColumnType("varchar(40)")
                     .HasColumnName("clave");
 
-                entity.Property(e => e.Correo)
+                b.Property<string>("Correo")
                     .HasMaxLength(40)
                     .IsUnicode(false)
+                    .HasColumnType("varchar(40)")
                     .HasColumnName("correo");
 
-                entity.Property(e => e.EsActivo).HasColumnName("esActivo");
+                b.Property<bool?>("EsActivo")
+                    .HasColumnType("bit")
+                    .HasColumnName("esActivo");
 
-                entity.Property(e => e.IdRol).HasColumnName("idRol");
+                b.Property<int?>("IdRol")
+                    .HasColumnType("int")
+                    .HasColumnName("idRol");
 
-                entity.Property(e => e.NombreApellidos)
+                b.Property<string>("NombreApellidos")
                     .HasMaxLength(100)
                     .IsUnicode(false)
+                    .HasColumnType("varchar(100)")
                     .HasColumnName("nombreApellidos");
 
-                entity.HasOne(d => d.IdRolNavigation)
-                    .WithMany(p => p.Usuarios)
-                    .HasForeignKey(d => d.IdRol)
-                    .HasConstraintName("FK__Usuario__idRol__164452B1");
+                b.HasKey("IdUsuario")
+                    .HasName("PK__Usuario__645723A61F6FD7E7");
+
+                b.HasIndex("IdRol");
+
+                b.ToTable("Usuario", (string)null);
             });
 
-            modelBuilder.Entity<Venta>(entity =>
+            modelBuilder.Entity("SistemaVentaCosmeticos.Models.Venta", b =>
             {
-                entity.HasKey(e => e.IdVenta)
-                    .HasName("PK__Venta__077D561409C275F1");
+                b.Property<int>("IdVenta")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int")
+                    .HasColumnName("idVenta");
 
-                entity.Property(e => e.IdVenta).HasColumnName("idVenta");
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdVenta"), 1L, 1);
 
-                entity.Property(e => e.FechaRegistro)
+                b.Property<DateTime?>("FechaRegistro")
+                    .ValueGeneratedOnAdd()
                     .HasColumnType("datetime")
                     .HasColumnName("fechaRegistro")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.NumeroDocumento)
+                b.Property<string>("NumeroDocumento")
                     .HasMaxLength(40)
                     .IsUnicode(false)
+                    .HasColumnType("varchar(40)")
                     .HasColumnName("numeroDocumento");
 
-                entity.Property(e => e.TipoPago)
+                b.Property<string>("TipoPago")
                     .HasMaxLength(50)
                     .IsUnicode(false)
+                    .HasColumnType("varchar(50)")
                     .HasColumnName("tipoPago");
 
-                entity.Property(e => e.Total)
-                    .HasColumnType("decimal(10, 2)")
+                b.Property<decimal?>("Total")
+                    .HasColumnType("decimal(10,2)")
                     .HasColumnName("total");
+
+                b.HasKey("IdVenta")
+                    .HasName("PK__Venta__077D561409C275F1");
+
+                b.ToTable("Venta");
+            });
+
+            modelBuilder.Entity("SistemaVentaCosmeticos.Models.DetalleVenta", b =>
+            {
+                b.HasOne("SistemaVentaCosmeticos.Models.Producto", "IdProductoNavigation")
+                    .WithMany("DetalleVenta")
+                    .HasForeignKey("IdProducto")
+                    .HasConstraintName("FK__DetalleVe__idPro__267ABA7A");
+
+                b.HasOne("SistemaVentaCosmeticos.Models.Venta", "IdVentaNavigation")
+                    .WithMany("DetalleVenta")
+                    .HasForeignKey("IdVenta")
+                    .HasConstraintName("FK__DetalleVe__idVen__25869641");
+
+                b.Navigation("IdProductoNavigation");
+
+                b.Navigation("IdVentaNavigation");
+            });
+
+            modelBuilder.Entity("SistemaVentaCosmeticos.Models.Producto", b =>
+            {
+                b.HasOne("SistemaVentaCosmeticos.Models.DepartamentoVenta", "IdDepartamentoVentaNavigation")
+                    .WithMany("Productos")
+                    .HasForeignKey("IdDepartamentoVenta")
+                    .HasConstraintName("FK__Producto__idCate__1BFD2C07");
+
+                b.Navigation("IdDepartamentoVentaNavigation");
+            });
+
+            modelBuilder.Entity("SistemaVentaCosmeticos.Models.Usuario", b =>
+            {
+                b.HasOne("SistemaVentaCosmeticos.Models.Rol", "IdRolNavigation")
+                    .WithMany("Usuarios")
+                    .HasForeignKey("IdRol")
+                    .HasConstraintName("FK__Usuario__idRol__164452B1");
+
+                b.Navigation("IdRolNavigation");
+            });
+
+            modelBuilder.Entity("SistemaVentaCosmeticos.Models.DepartamentoVenta", b =>
+            {
+                b.Navigation("Productos");
+            });
+
+            modelBuilder.Entity("SistemaVentaCosmeticos.Models.Producto", b =>
+            {
+                b.Navigation("DetalleVenta");
+            });
+
+            modelBuilder.Entity("SistemaVentaCosmeticos.Models.Rol", b =>
+            {
+                b.Navigation("Usuarios");
+            });
+
+            modelBuilder.Entity("SistemaVentaCosmeticos.Models.Venta", b =>
+            {
+                b.Navigation("DetalleVenta");
             });
 
             OnModelCreatingPartial(modelBuilder);
