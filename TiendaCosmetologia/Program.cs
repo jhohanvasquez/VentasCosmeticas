@@ -3,10 +3,14 @@ using SistemaVentaCosmeticos.Models;
 using SistemaVentaCosmeticos.Repository.Contratos;
 using SistemaVentaCosmeticos.Repository.Implementacion;
 using SistemaVentaCosmeticos.Recursos;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddDbContext<DBVentaCosmeticosContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllersWithViews();
 
