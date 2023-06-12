@@ -8,6 +8,7 @@ namespace SistemaVentaCosmeticos.Repository.Contratos
         Task<IEnumerable<Producto>> Crear(Producto entidad);
         Task<bool> Editar(Producto entidad);
         Task<bool> Eliminar(Producto entidad);
-        Task<IEnumerable<Producto>> Consultar(Expression<Func<Producto, bool>> filtro = null);
+        Task<IEnumerable<Producto>> Consultar();
+        Task<IEnumerable<Producto>> Consultar(int id);
     }
 }

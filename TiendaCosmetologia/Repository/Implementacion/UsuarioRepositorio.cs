@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using Dapper;
 using System.Data;
+using ExpressionExtensionSQL;
+
+
 
 namespace SistemaVentaCosmeticos.Repository.Implementacion
 {
@@ -114,20 +117,42 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
             }
         }
 
-        public async Task<IEnumerable<Usuario>> Obtener(Expression<Func<Usuario, bool>> filtro = null)
+        public async Task<IEnumerable<Usuario>> Obtener(string email, string clave)
         {
             try
             {
-                var query = $@"SELECT * FROM [Usuario]
-                            {{where}}";
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("email", email);
+                parameters.Add("clave", clave);
 
                 using (var connection = _dbContext.CreateConnection())
                 {
-                    var list = await connection.QueryAsync<Usuario>(query, filtro);
-                    return list;
+                    var result = await connection.QueryAsync<Usuario>("SPObtenerUsuario", parameters, commandType: CommandType.StoredProcedure);
+
+                    return result;
                 }
             }
-            catch
+            catch (Exception ex) 
+            {
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<Usuario>> Obtener(int id)
+        {
+            try
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("idUsuario", id);
+
+                using (var connection = _dbContext.CreateConnection())
+                {
+                    var result = await connection.QueryAsync<Usuario>("SPObtenerUsuarioId", parameters, commandType: CommandType.StoredProcedure);
+
+                    return result;
+                }
+            }
+            catch (Exception ex)
             {
                 throw;
             }

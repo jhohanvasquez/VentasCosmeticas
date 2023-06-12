@@ -15,7 +15,7 @@ namespace SistemaVentaCosmeticos.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IUsuarioRepositorio _usuarioRepositorio;
-        public UsuarioController(IUsuarioRepositorio usuarioRepositorio,IMapper mapper)
+        public UsuarioController(IUsuarioRepositorio usuarioRepositorio, IMapper mapper)
         {
             _mapper = mapper;
             _usuarioRepositorio = usuarioRepositorio;
@@ -23,16 +23,17 @@ namespace SistemaVentaCosmeticos.Controllers
 
         [HttpGet]
         [Route("Lista")]
-        public async Task<IActionResult> Lista() {
+        public async Task<IActionResult> Lista()
+        {
             Response<List<UsuarioDTO>> _response = new Response<List<UsuarioDTO>>();
-            
+
             try
             {
                 List<UsuarioDTO> ListaUsuarios = new List<UsuarioDTO>();
                 IQueryable<Usuario> query = (IQueryable<Usuario>)await _usuarioRepositorio.Consultar();
                 query = query.Include(r => r.IdRolNavigation);
 
-                ListaUsuarios  = _mapper.Map<List<UsuarioDTO>>(query.ToList());
+                ListaUsuarios = _mapper.Map<List<UsuarioDTO>>(query.ToList());
 
                 if (ListaUsuarios.Count > 0)
                     _response = new Response<List<UsuarioDTO>>() { status = true, msg = "ok", value = ListaUsuarios };
@@ -41,7 +42,8 @@ namespace SistemaVentaCosmeticos.Controllers
 
                 return StatusCode(StatusCodes.Status200OK, _response);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 _response = new Response<List<UsuarioDTO>>() { status = false, msg = ex.Message, value = null };
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
@@ -49,15 +51,15 @@ namespace SistemaVentaCosmeticos.Controllers
 
         [HttpGet]
         [Route("IniciarSesion")]
-        public async Task<IActionResult> IniciarSesion(string correo,string clave)
+        public async Task<IActionResult> IniciarSesion(string correo, string clave)
         {
-            Response<Usuario> _response = new Response<Usuario> ();
+            Response<Usuario> _response = new Response<Usuario>();
             try
             {
-                Usuario _usuario  = (Usuario)await _usuarioRepositorio.Obtener(u => u.Correo == correo && u.Clave == clave);
+                Usuario _usuario = (Usuario)await _usuarioRepositorio.Obtener(correo, clave);
 
                 if (_usuario != null)
-                    _response = new Response<Usuario>() { status = true,msg="ok",value = _usuario };
+                    _response = new Response<Usuario>() { status = true, msg = "ok", value = _usuario };
                 else
                     _response = new Response<Usuario>() { status = false, msg = "no encontrado", value = null };
 
@@ -81,8 +83,8 @@ namespace SistemaVentaCosmeticos.Controllers
 
                 Usuario _usuarioCreado = (Usuario)await _usuarioRepositorio.Crear(_usuario);
 
-                if(_usuarioCreado.IdUsuario != 0)
-                    _response = new Response<UsuarioDTO>() { status = true, msg= "ok", value = _mapper.Map<UsuarioDTO>(_usuarioCreado) };
+                if (_usuarioCreado.IdUsuario != 0)
+                    _response = new Response<UsuarioDTO>() { status = true, msg = "ok", value = _mapper.Map<UsuarioDTO>(_usuarioCreado) };
                 else
                     _response = new Response<UsuarioDTO>() { status = false, msg = "No se pudo crear el usuario" };
 
@@ -103,7 +105,7 @@ namespace SistemaVentaCosmeticos.Controllers
             try
             {
                 Usuario _usuario = _mapper.Map<Usuario>(request);
-                Usuario _usuarioParaEditar = (Usuario)await _usuarioRepositorio.Obtener(u => u.IdUsuario == _usuario.IdUsuario);
+                Usuario _usuarioParaEditar = (Usuario)await _usuarioRepositorio.Obtener(_usuario.IdUsuario);
 
                 if (_usuarioParaEditar != null)
                 {
@@ -120,7 +122,8 @@ namespace SistemaVentaCosmeticos.Controllers
                     else
                         _response = new Response<UsuarioDTO>() { status = false, msg = "No se pudo editar el usuario" };
                 }
-                else {
+                else
+                {
                     _response = new Response<UsuarioDTO>() { status = false, msg = "No se encontró el usuario" };
                 }
 
@@ -142,9 +145,10 @@ namespace SistemaVentaCosmeticos.Controllers
             Response<string> _response = new Response<string>();
             try
             {
-                Usuario _usuarioEliminar = (Usuario)await _usuarioRepositorio.Obtener(u => u.IdUsuario == id);
+                Usuario _usuarioEliminar = (Usuario)await _usuarioRepositorio.Obtener(id);
 
-                if (_usuarioEliminar != null) {
+                if (_usuarioEliminar != null)
+                {
 
                     bool respuesta = await _usuarioRepositorio.Eliminar(_usuarioEliminar);
 

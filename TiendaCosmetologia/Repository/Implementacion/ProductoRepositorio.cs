@@ -16,15 +16,25 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
             _context = dbContext;
         }
 
-        public async Task<IEnumerable<Producto>> Consultar(Expression<Func<Producto, bool>> filtro = null)
+        public async Task<IEnumerable<Producto>> Consultar()
         {
-            var query = $@"SELECT * FROM [Usuario]
-                            {{where}}";
-
             using (var connection = _context.CreateConnection())
             {
-                var list = await connection.QueryAsync<Producto>(query, filtro);
-                return list;
+                return await connection.QueryAsync<Producto>("SPCrearProducto", null, commandType: CommandType.StoredProcedure);
+
+            }
+        }
+
+        public async Task<IEnumerable<Producto>> Consultar(int idProducto)
+        {
+            using (var connection = _context.CreateConnection())
+            {
+
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("IdProducto", idProducto);
+                
+                return await connection.QueryAsync<Producto>("SPCrearProductoId", parameters, commandType: CommandType.StoredProcedure);
+
             }
         }
 

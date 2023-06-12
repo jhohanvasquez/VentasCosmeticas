@@ -83,7 +83,7 @@ namespace SistemaVentaCosmeticos.Controllers
             try
             {
                 Producto _producto = _mapper.Map<Producto>(request);
-                Producto _productoParaEditar = (Producto)await _productoRepositorio.Consultar(u => u.IdProducto == _producto.IdProducto);
+                Producto _productoParaEditar = (Producto)await _productoRepositorio.Consultar(_producto.IdProducto);
 
                 if (_productoParaEditar != null)
                 {
@@ -123,7 +123,7 @@ namespace SistemaVentaCosmeticos.Controllers
             Response<string> _response = new Response<string>();
             try
             {
-                Producto _productoEliminar = (Producto)await _productoRepositorio.Consultar(u => u.IdProducto == id);
+                Producto _productoEliminar = (Producto)await _productoRepositorio.Consultar(id);
 
                 if (_productoEliminar != null)
                 {
