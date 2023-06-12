@@ -14,33 +14,26 @@ insert into usuario(nombreApellidos,correo,idRol,Clave,esActivo) values
 
 go
 --INSERTAR DepartamentoVentaS
-insert into DepartamentoVenta(descripcion,esActivo) values ('Laptops',1)
-insert into DepartamentoVenta(descripcion,esActivo) values ('Monitores',1)
-insert into DepartamentoVenta(descripcion,esActivo) values ('Teclados',1)
-insert into DepartamentoVenta(descripcion,esActivo) values ('Auriculares',1)
-insert into DepartamentoVenta(descripcion,esActivo) values ('Memorias',1)
-insert into DepartamentoVenta(descripcion,esActivo) values ('Accesorios',1)
+insert into DepartamentoVenta(descripcion,esActivo) values ('Disoluciones y lociones',1)
+insert into DepartamentoVenta(descripcion,esActivo) values ('Emulsiones',1)
+insert into DepartamentoVenta(descripcion,esActivo) values ('Suspensiones',1)
+insert into DepartamentoVenta(descripcion,esActivo) values ('Geles',1)
+insert into DepartamentoVenta(descripcion,esActivo) values ('Espumas',1)
+insert into DepartamentoVenta(descripcion,esActivo) values ('Pulverizadores',1)
 
 go
 
 --INSERTAR PRODUCTOS
 
 insert into Producto(nombre,idDepartamentoVenta,stock,precio,esActivo) values
-('laptop samsung book pro',1,20,2500,1),
-('laptop lenovo idea pad',1,30,2200,1),
-('laptop asus zenbook duo',1,30,2100,1),
-('monitor teros gaming te-2',2,25,1050,1),
-('monitor samsung curvo',2,15,1400,1),
-('monitor huawei gamer',2,10,1350,1),
-('teclado seisen gamer',3,10,800,1),
-('teclado antryx gamer',3,10,1000,1),
-('teclado logitech',3,10,1000,1),
-('auricular logitech gamer',4,15,800,1),
-('auricular hyperx gamer',4,20,680,1),
-('auricular redragon rgb',4,25,950,1),
-('memoria kingston rgb',5,10,200,1),
-('ventilador cooler master',6,20,200,1),
-('mini ventilador lenono',6,15,200,1)
+('perfumes',1,20,2500,1),
+('brillantinas',1,30,2200,1),
+('leches de limpieza',2,30,2100,1),
+('Cremas',2,25,1050,1),
+('maquillajes fluidos',3,15,1400,1),
+('Gominas Cabello',4,10,1350,1),
+('Espumas Limpieza',5,10,800,1),
+('maquillaje en polvo',6,10,1000,1)
 
 go
 
