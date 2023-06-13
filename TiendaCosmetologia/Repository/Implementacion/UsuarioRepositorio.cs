@@ -45,7 +45,7 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
                     parameters.Add("Clave", entidad.Clave);
                     parameters.Add("EsActivo", entidad.EsActivo);
 
-                    var result = await connection.QueryAsync<Usuario>("SPCrearUsuario", parameters, commandType: CommandType.StoredProcedure);
+                    var result = await connection.QueryAsync<Usuario>("SP_CrearUsuario", parameters, commandType: CommandType.StoredProcedure);
 
                     return result;
                 }
@@ -63,13 +63,14 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
                 using (var connection = _dbContext.CreateConnection())
                 {
                     DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("idUsuario", entidad.IdUsuario);
                     parameters.Add("NombreApellidos", entidad.NombreApellidos);
                     parameters.Add("Correo", entidad.Correo);
                     parameters.Add("IdRol", entidad.IdRol);
                     parameters.Add("Clave", entidad.Clave);
                     parameters.Add("EsActivo", entidad.EsActivo);
 
-                    var result = await connection.QueryAsync<Usuario>("SPEditarUsuario", parameters, commandType: CommandType.StoredProcedure);
+                    var result = await connection.QueryAsync<Usuario>("SP_EditarUsuario", parameters, commandType: CommandType.StoredProcedure);
 
                     return true;
                 }
@@ -90,7 +91,7 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
                     DynamicParameters parameters = new DynamicParameters();
                     parameters.Add("IdUsuario", entidad.IdUsuario);
 
-                    var result = await connection.QueryAsync<Usuario>("SPEliminarUsuario", parameters, commandType: CommandType.StoredProcedure);
+                    var result = await connection.QueryAsync<Usuario>("SP_EliminarUsuario", parameters, commandType: CommandType.StoredProcedure);
 
                     return true;
                 }
@@ -107,7 +108,7 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
             {
                 using (var connection = _dbContext.CreateConnection())
                 {
-                    return await connection.QueryAsync<Usuario>("SPListarUsuario", null, commandType: CommandType.StoredProcedure);
+                    return await connection.QueryAsync<Usuario>("SP_ListarUsuario", null, commandType: CommandType.StoredProcedure);
 
                 }
             }
@@ -127,7 +128,7 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
 
                 using (var connection = _dbContext.CreateConnection())
                 {
-                    var result = await connection.QueryAsync<Usuario>("SPObtenerUsuario", parameters, commandType: CommandType.StoredProcedure);
+                    var result = await connection.QueryAsync<Usuario>("SP_ObtenerUsuario", parameters, commandType: CommandType.StoredProcedure);
 
                     return result;
                 }
@@ -147,7 +148,7 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
 
                 using (var connection = _dbContext.CreateConnection())
                 {
-                    var result = await connection.QueryAsync<Usuario>("SPObtenerUsuarioId", parameters, commandType: CommandType.StoredProcedure);
+                    var result = await connection.QueryAsync<Usuario>("SP_ObtenerUsuarioId", parameters, commandType: CommandType.StoredProcedure);
 
                     return result;
                 }

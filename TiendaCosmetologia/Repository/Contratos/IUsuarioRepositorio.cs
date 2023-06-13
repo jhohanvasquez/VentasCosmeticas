@@ -11,6 +11,5 @@ namespace SistemaVentaCosmeticos.Repository.Contratos
         Task<IEnumerable<Usuario>> Crear(Usuario entidad);
         Task<bool> Editar(Usuario entidad);
         Task<bool> Eliminar(Usuario entidad);
-        Task<IEnumerable<Usuario>> Consultar(Expression<Func<Usuario, bool>> filtro = null);
     }
 }
