@@ -41,4 +41,6 @@ Clave usuario Pruebas:
 
 * <img width="682" alt="image" src="https://github.com/jhohanvasquez/VentasCosmeticas/assets/36570532/21ed8d3c-6c5b-428d-b46d-2f943e8ce78d">
 
+* <img width="728" alt="image" src="https://github.com/jhohanvasquez/VentasCosmeticas/assets/36570532/522b39dc-9ca9-48fb-8a8a-7a6e594a616d">
+
 * Pendiente aplicar promociones por tope de compras por producto
