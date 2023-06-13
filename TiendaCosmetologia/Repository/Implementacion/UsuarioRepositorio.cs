@@ -118,7 +118,7 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
             }
         }
 
-        public async Task<IEnumerable<Usuario>> Obtener(string email, string clave)
+        public async Task<Usuario> Obtener(string email, string clave)
         {
             try
             {
@@ -130,7 +130,7 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
                 {
                     var result = await connection.QueryAsync<Usuario>("SP_ObtenerUsuario", parameters, commandType: CommandType.StoredProcedure);
 
-                    return result;
+                    return result.FirstOrDefault();
                 }
             }
             catch (Exception ex) 
@@ -139,7 +139,7 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
             }
         }
 
-        public async Task<IEnumerable<Usuario>> Obtener(int id)
+        public async Task<Usuario> Obtener(int id)
         {
             try
             {
@@ -150,7 +150,7 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
                 {
                     var result = await connection.QueryAsync<Usuario>("SP_ObtenerUsuarioId", parameters, commandType: CommandType.StoredProcedure);
 
-                    return result;
+                    return result.FirstOrDefault();
                 }
             }
             catch (Exception ex)
