@@ -11,9 +11,9 @@ import { ProductoService } from '../../../services/producto.service';
 
 
 const ELEMENT_DATA: Producto[] = [
-  { idProducto: 1, nombre: "yougur gloria", idDepartamentoVenta: 1, descripcionDepartamentoVenta:"Lacteos", stock: 30, precio: "2.5" },
-  { idProducto: 2, nombre: "Detergente sapolio", idDepartamentoVenta: 2, descripcionDepartamentoVenta:"Productos de Limpieza", stock: 23, precio: "3.5" },
-  { idProducto: 3, nombre: "Mantequilla lavie", idDepartamentoVenta: 3, descripcionDepartamentoVenta:"Abarrotes", stock: 25, precio: "4.5" },
+  { idProducto: 1, nombre: "Labial", idDepartamentoVenta: 1, descripcionDepartamentoVenta:"Unguentos", color: "rojo", stock: 30, precio: "2.5" },
+  { idProducto: 2, nombre: "Lapiz Ojos", idDepartamentoVenta: 2, descripcionDepartamentoVenta: "Maquillaje", color: "azul", stock: 23, precio: "3.5" },
+  { idProducto: 3, nombre: "Base", idDepartamentoVenta: 3, descripcionDepartamentoVenta: "Polvo", color: "blanco", stock: 25, precio: "4.5" },
 
 ];
 
@@ -23,7 +23,7 @@ const ELEMENT_DATA: Producto[] = [
   styleUrls: ['./productos.component.css']
 })
 export class ProductosComponent implements OnInit {
-  displayedColumns: string[] = ['nombre', 'DepartamentoVenta', 'stock','precio', 'acciones'];
+  displayedColumns: string[] = ['nombre', 'color', 'DepartamentoVenta', 'stock','precio', 'acciones'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 

@@ -84,6 +84,7 @@ export class DialogProductoComponent implements OnInit {
     const _producto: Producto = {
       idProducto: this.productoEditar == null ? 0 : this.productoEditar.idProducto,
       nombre: this.formProducto.value.nombre,
+      color: this.formProducto.value.color,
       idDepartamentoVenta: this.formProducto.value.idDepartamentoVenta,
       descripcionDepartamentoVenta : "",
       precio: this.formProducto.value.precio,

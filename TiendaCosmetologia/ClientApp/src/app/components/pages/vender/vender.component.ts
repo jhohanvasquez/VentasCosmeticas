@@ -28,7 +28,7 @@ export class VenderComponent implements OnInit {
   totalPagar: number = 0;
 
   formGroup: FormGroup;
-  displayedColumns: string[] = ['producto', 'cantidad', 'precio', 'total','accion'];
+  displayedColumns: string[] = ['producto', 'color', 'cantidad', 'precio', 'total','accion'];
   dataSource = new MatTableDataSource(this.ELEMENT_DATA);
 
   constructor(
@@ -91,6 +91,7 @@ export class VenderComponent implements OnInit {
       {
         idProducto: this.agregarProducto.idProducto,
         descripcionProducto: this.agregarProducto.nombre,
+        color: this.agregarProducto.color,
         cantidad: _cantidad,
         precioTexto: String(_precio.toFixed(2)),
         totalTexto: String(_total.toFixed(2))

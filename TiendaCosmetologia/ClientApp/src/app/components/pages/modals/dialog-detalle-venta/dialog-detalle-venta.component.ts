@@ -12,12 +12,13 @@ export class DialogDetalleVentaComponent implements OnInit {
 
   fechaRegistro?: string = "";
   numero?: string = "";
+  color?: string = "";
   tipoPago?: string = "";
   total?: string = "";
   detalleVenta: DetalleVenta[] = [
-    {idProducto:1,descripcionProducto:"",cantidad:0,precioTexto:"0",totalTexto:"0"},
+    { idProducto: 1, descripcionProducto: "", color: "", cantidad:0,precioTexto:"0",totalTexto:"0"},
   ]
-  displayedColumns: string[] = ['producto', 'cantidad', 'precio', 'total'];
+  displayedColumns: string[] = ['producto', 'color', 'cantidad', 'precio', 'total'];
  
 
   constructor(@Inject(MAT_DIALOG_DATA) public _venta: Venta) {
@@ -26,7 +27,7 @@ export class DialogDetalleVentaComponent implements OnInit {
     this.tipoPago = _venta.tipoPago;
     this.total = _venta.totalTexto;
     this.detalleVenta = _venta.detalleVenta == null ? [
-      { idProducto: 1, descripcionProducto: "", cantidad: 0, precioTexto: "0", totalTexto: "0" },
+      { idProducto: 1, descripcionProducto: "", color: "", cantidad: 0, precioTexto: "0", totalTexto: "0" },
     ] : _venta.detalleVenta;
   }
 
