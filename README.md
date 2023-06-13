@@ -7,6 +7,9 @@ Aplicacion realizada en:
 * Angular 14
 * C#
 * Karma
+* SQLServer
+* Procedimientos Almacenados
+* API
 
 1. Instale la base de datos ejecutando el scrip en sqlServer https://github.com/jhohanvasquez/VentasCosmeticas/blob/main/Utilidad/Scripts%20to%20BD/script_db.txt
 
