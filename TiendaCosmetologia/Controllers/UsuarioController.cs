@@ -30,10 +30,9 @@ namespace SistemaVentaCosmeticos.Controllers
             try
             {
                 List<UsuarioDTO> ListaUsuarios = new List<UsuarioDTO>();
-                IQueryable<Usuario> query = (IQueryable<Usuario>)await _usuarioRepositorio.Lista();
-                query = query.Include(r => r.IdRolNavigation);
-
-                ListaUsuarios = _mapper.Map<List<UsuarioDTO>>(query.ToList());
+                var query = await _usuarioRepositorio.Lista();
+                
+                ListaUsuarios = _mapper.Map<List<UsuarioDTO>>(query);
 
                 if (ListaUsuarios.Count > 0)
                     _response = new Response<List<UsuarioDTO>>() { status = true, msg = "ok", value = ListaUsuarios };
