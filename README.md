@@ -26,6 +26,8 @@ Clave usuario Pruebas:
 
 * <img width="626" alt="image" src="https://github.com/jhohanvasquez/VentasCosmeticas/assets/36570532/3aa79218-d16d-4bf6-bdf8-1c3ba04121bc">
 
+* <img width="587" alt="image" src="https://github.com/jhohanvasquez/VentasCosmeticas/assets/36570532/3ea604df-1866-4acb-a986-c209b6e9b273">
+
 * <img width="944" alt="image" src="https://github.com/jhohanvasquez/VentasCosmeticas/assets/36570532/04b6d4a4-9524-4f31-87fd-df3af105f363">
 
 * <img width="888" alt="image" src="https://github.com/jhohanvasquez/VentasCosmeticas/assets/36570532/0ac60464-bb5e-45c9-ba89-9aea06fe6739">
