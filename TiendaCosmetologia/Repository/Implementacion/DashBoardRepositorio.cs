@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using SistemaVentaCosmeticos.Models;
 using SistemaVentaCosmeticos.Repository.Contratos;
+using System.Data;
 using System.Globalization;
 
 namespace SistemaVentaCosmeticos.Repository.Implementacion
@@ -16,11 +17,10 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
         {
             try
             {
-                var query = "SELECT * FROM Productos";
                 using (var connection = _context.CreateConnection())
                 {
-                    var companies = await connection.QueryAsync<Producto>(query);
-                    return companies.ToList().Count();
+                    var result = await connection.QueryAsync<int>("SP_ConsultarProductos", null, commandType: CommandType.StoredProcedure);
+                    return result.ToList().Count();
                 }
             }
             catch
