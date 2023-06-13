@@ -89,7 +89,7 @@ namespace SistemaVentaCosmeticos.Controllers
                 {
 
                     _productoParaEditar.Nombre = _producto.Nombre;
-                    _productoParaEditar.IdDepartamentoVenta = _producto.IdDepartamentoVenta;
+                    _productoParaEditar.idDepartamentoVenta = _producto.idDepartamentoVenta;
                     _productoParaEditar.Stock = _producto.Stock;
                     _productoParaEditar.Precio = _producto.Precio;
 

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SistemaVentaCosmeticos.Models;
 using SistemaVentaCosmeticos.Repository.Contratos;
+using System.Data;
 using System.Linq.Expressions;
 
 namespace SistemaVentaCosmeticos.Repository.Implementacion
@@ -18,11 +19,10 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
         {
             try
             {
-                var query = "SELECT * FROM Rol";
                 using (var connection = _context.CreateConnection())
                 {
-                    var rols = await connection.QueryAsync<Rol>(query);
-                    return rols.ToList();
+                    var result = await connection.QueryAsync<Rol>("SP_ListarUsuario", null, commandType: CommandType.StoredProcedure);
+                    return result.ToList();
                 }
             }
             catch

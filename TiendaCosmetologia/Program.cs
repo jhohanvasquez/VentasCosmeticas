@@ -4,7 +4,6 @@ using SistemaVentaCosmeticos.Repository.Contratos;
 using SistemaVentaCosmeticos.Repository.Implementacion;
 using SistemaVentaCosmeticos.Recursos;
 using System;
-using SistemaVentaCosmeticos.Repository.Implementacion.Comun.Satrack.SafeVehicle.Infrastructure.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 

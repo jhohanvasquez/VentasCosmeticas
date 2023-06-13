@@ -56,7 +56,6 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
             //    throw;
             //}
 
-
             return VentaGenerada;
         }
 

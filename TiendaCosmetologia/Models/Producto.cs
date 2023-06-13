@@ -13,7 +13,8 @@ namespace SistemaVentaCosmeticos.Models
         public int IdProducto { get; set; }
         public string? Nombre { get; set; }
         public string? Color { get; set; }
-        public int? IdDepartamentoVenta { get; set; }
+        public int? idDepartamentoVenta { get; set; }
+        public int? idPromocion { get; set; }
         public int? Stock { get; set; }
         public decimal? Precio { get; set; }
         public bool? EsActivo { get; set; }
