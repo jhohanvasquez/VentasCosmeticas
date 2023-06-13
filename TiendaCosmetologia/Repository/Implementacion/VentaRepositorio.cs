@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
 using SistemaVentaCosmeticos.Models;
 using SistemaVentaCosmeticos.Repository.Contratos;
+using System.Data;
 using System.Globalization;
 
 namespace SistemaVentaCosmeticos.Repository.Implementacion
@@ -8,53 +10,50 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
     public class VentaRepositorio : IVentaRepositorio
     {
         private readonly DBVentaCosmeticosContext _dbcontext;
-        public VentaRepositorio(DBVentaCosmeticosContext context)
+
+        private readonly IProductoRepositorio _dbproducto;
+        public VentaRepositorio(DBVentaCosmeticosContext context, IProductoRepositorio dbproducto)
         {
-            _dbcontext = context;
+            this._dbcontext = context;
+            this._dbproducto = dbproducto;
         }
 
         public async Task<Venta> Registrar(Venta entidad)
         {
             Venta VentaGenerada = new Venta();
 
-            int CantidadDigitos = 4;
-            //try
-            //{
-            //    foreach (DetalleVenta dv in entidad.DetalleVenta)
-            //    {
-            //        Producto producto_encontrado = _dbcontext.Productos.Where(p => p.IdProducto == dv.IdProducto).First();
+            try
+            {
+                foreach (DetalleVenta dv in entidad.DetalleVenta)
+                {
+                    Producto producto_encontrado = await _dbproducto.Consultar(dv.IdProducto);
 
-            //        producto_encontrado.Stock = producto_encontrado.Stock - dv.Cantidad;
-            //        _dbcontext.Productos.Update(producto_encontrado);
-            //    }
-            //    await _dbcontext.SaveChangesAsync();
+                    producto_encontrado.Stock = producto_encontrado.Stock - dv.Cantidad;
+                    await _dbproducto.Editar(producto_encontrado);
+                }
 
+                entidad.NumeroDocumento = Guid.NewGuid().ToString();
+                entidad.FechaRegistro = DateTime.Now;
 
-            //    NumeroDocumento correlativo = _dbcontext.NumeroDocumentos.First();
+                using (var connection = _dbcontext.CreateConnection())
+                {
 
-            //    correlativo.UltimoNumero = correlativo.UltimoNumero + 1;
-            //    correlativo.FechaRegistro = DateTime.Now;
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("NumeroDocumento", entidad.NumeroDocumento);
+                    parameters.Add("TipoPago", entidad.TipoPago);
+                    parameters.Add("FechaRegistro", entidad.FechaRegistro);
+                    parameters.Add("Total", entidad.Total);
 
-            //    _dbcontext.NumeroDocumentos.Update(correlativo);
-            //    await _dbcontext.SaveChangesAsync();
+                    var result = await connection.ExecuteScalarAsync<int>("SP_CrearVenta", parameters, commandType: CommandType.StoredProcedure);
+                    entidad.IdVenta = result;                   
+                }
 
-
-            //    string ceros = string.Concat(Enumerable.Repeat("0", CantidadDigitos));
-            //    string numeroVenta = ceros + correlativo.UltimoNumero.ToString();
-            //    numeroVenta = numeroVenta.Substring(numeroVenta.Length - CantidadDigitos, CantidadDigitos);
-
-            //    entidad.NumeroDocumento = numeroVenta;
-
-            //    await _dbcontext.Venta.AddAsync(entidad);
-            //    await _dbcontext.SaveChangesAsync();
-
-            //    VentaGenerada = entidad;
-
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw;
-            //}
+                VentaGenerada = entidad;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
 
             return VentaGenerada;
         }

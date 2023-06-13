@@ -5,7 +5,7 @@ go
 
 USE [DBVentaCosmeticos]
 GO
-/****** Object:  Table [dbo].[DepartamentoVenta]    Script Date: 12/06/2023 9:47:40 p. m. ******/
+/****** Object:  Table [dbo].[DepartamentoVenta]    Script Date: 12/06/2023 10:47:31 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -21,7 +21,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[DetalleVenta]    Script Date: 12/06/2023 9:47:40 p. m. ******/
+/****** Object:  Table [dbo].[DetalleVenta]    Script Date: 12/06/2023 10:47:31 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -39,7 +39,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[NumeroDocumento]    Script Date: 12/06/2023 9:47:40 p. m. ******/
+/****** Object:  Table [dbo].[NumeroDocumento]    Script Date: 12/06/2023 10:47:31 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -54,7 +54,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Producto]    Script Date: 12/06/2023 9:47:40 p. m. ******/
+/****** Object:  Table [dbo].[Producto]    Script Date: 12/06/2023 10:47:31 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -75,7 +75,7 @@ CREATE TABLE [dbo].[Producto](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Promocion]    Script Date: 12/06/2023 9:47:40 p. m. ******/
+/****** Object:  Table [dbo].[Promocion]    Script Date: 12/06/2023 10:47:31 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -92,7 +92,7 @@ CREATE TABLE [dbo].[Promocion](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Rol]    Script Date: 12/06/2023 9:47:40 p. m. ******/
+/****** Object:  Table [dbo].[Rol]    Script Date: 12/06/2023 10:47:31 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -108,7 +108,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Usuario]    Script Date: 12/06/2023 9:47:40 p. m. ******/
+/****** Object:  Table [dbo].[Usuario]    Script Date: 12/06/2023 10:47:31 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -126,18 +126,18 @@ CREATE TABLE [dbo].[Usuario](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Venta]    Script Date: 12/06/2023 9:47:40 p. m. ******/
+/****** Object:  Table [dbo].[Venta]    Script Date: 12/06/2023 10:47:31 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Venta](
 	[idVenta] [int] IDENTITY(1,1) NOT NULL,
-	[numeroDocumento] [varchar](40) NULL,
+	[numeroDocumento] [varchar](100) NULL,
 	[tipoPago] [varchar](50) NULL,
 	[fechaRegistro] [datetime] NULL,
 	[total] [decimal](10, 2) NULL,
-PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK__Venta__077D5614182C9B23] PRIMARY KEY CLUSTERED 
 (
 	[idVenta] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -171,13 +171,13 @@ INSERT [dbo].[Producto] ([idProducto], [idPromocion], [idDepartamentoVenta], [no
 GO
 INSERT [dbo].[Producto] ([idProducto], [idPromocion], [idDepartamentoVenta], [nombre], [color], [stock], [precio], [esActivo], [fechaRegistro]) VALUES (2, 3, 1, N'brillantinas', N'azul', 30, CAST(2200.00 AS Decimal(10, 2)), 1, CAST(N'2023-06-12T12:03:53.463' AS DateTime))
 GO
-INSERT [dbo].[Producto] ([idProducto], [idPromocion], [idDepartamentoVenta], [nombre], [color], [stock], [precio], [esActivo], [fechaRegistro]) VALUES (3, 3, 2, N'leches de limpieza', N'crema', 30, CAST(2100.00 AS Decimal(10, 2)), 1, CAST(N'2023-06-12T12:03:53.463' AS DateTime))
+INSERT [dbo].[Producto] ([idProducto], [idPromocion], [idDepartamentoVenta], [nombre], [color], [stock], [precio], [esActivo], [fechaRegistro]) VALUES (3, 3, 2, N'leches de limpieza', N'crema', 29, CAST(2100.00 AS Decimal(10, 2)), 1, CAST(N'2023-06-12T12:03:53.463' AS DateTime))
 GO
-INSERT [dbo].[Producto] ([idProducto], [idPromocion], [idDepartamentoVenta], [nombre], [color], [stock], [precio], [esActivo], [fechaRegistro]) VALUES (4, 3, 2, N'Cremas', N'piel', 25, CAST(1050.00 AS Decimal(10, 2)), 1, CAST(N'2023-06-12T12:03:53.463' AS DateTime))
+INSERT [dbo].[Producto] ([idProducto], [idPromocion], [idDepartamentoVenta], [nombre], [color], [stock], [precio], [esActivo], [fechaRegistro]) VALUES (4, 3, 2, N'Cremas', N'piel', 21, CAST(1050.00 AS Decimal(10, 2)), 1, CAST(N'2023-06-12T12:03:53.463' AS DateTime))
 GO
 INSERT [dbo].[Producto] ([idProducto], [idPromocion], [idDepartamentoVenta], [nombre], [color], [stock], [precio], [esActivo], [fechaRegistro]) VALUES (5, 3, 3, N'maquillajes fluidos', N'rojo', 15, CAST(1400.00 AS Decimal(10, 2)), 1, CAST(N'2023-06-12T12:03:53.463' AS DateTime))
 GO
-INSERT [dbo].[Producto] ([idProducto], [idPromocion], [idDepartamentoVenta], [nombre], [color], [stock], [precio], [esActivo], [fechaRegistro]) VALUES (6, 1, 4, N'Gominas Cabello', N'trasparente', 10, CAST(1350.00 AS Decimal(10, 2)), 1, CAST(N'2023-06-12T12:03:53.463' AS DateTime))
+INSERT [dbo].[Producto] ([idProducto], [idPromocion], [idDepartamentoVenta], [nombre], [color], [stock], [precio], [esActivo], [fechaRegistro]) VALUES (6, 1, 4, N'Gominas Cabello', N'trasparente', 9, CAST(1350.00 AS Decimal(10, 2)), 1, CAST(N'2023-06-12T12:03:53.463' AS DateTime))
 GO
 INSERT [dbo].[Producto] ([idProducto], [idPromocion], [idDepartamentoVenta], [nombre], [color], [stock], [precio], [esActivo], [fechaRegistro]) VALUES (7, 3, 5, N'Espumas Limpieza', N'amarillo', 10, CAST(800.00 AS Decimal(10, 2)), 1, CAST(N'2023-06-12T12:03:53.463' AS DateTime))
 GO
@@ -219,15 +219,17 @@ ALTER TABLE [dbo].[Producto] ADD  CONSTRAINT [DF__Producto__fechaR__108B795B]  D
 GO
 ALTER TABLE [dbo].[Rol] ADD  DEFAULT (getdate()) FOR [fechaRegistro]
 GO
-ALTER TABLE [dbo].[Venta] ADD  DEFAULT (getdate()) FOR [fechaRegistro]
+ALTER TABLE [dbo].[Venta] ADD  CONSTRAINT [DF__Venta__fechaRegi__1A14E395]  DEFAULT (getdate()) FOR [fechaRegistro]
 GO
 ALTER TABLE [dbo].[DetalleVenta]  WITH CHECK ADD  CONSTRAINT [FK__DetalleVe__idPro__1FCDBCEB] FOREIGN KEY([idProducto])
 REFERENCES [dbo].[Producto] ([idProducto])
 GO
 ALTER TABLE [dbo].[DetalleVenta] CHECK CONSTRAINT [FK__DetalleVe__idPro__1FCDBCEB]
 GO
-ALTER TABLE [dbo].[DetalleVenta]  WITH CHECK ADD FOREIGN KEY([idVenta])
+ALTER TABLE [dbo].[DetalleVenta]  WITH CHECK ADD  CONSTRAINT [FK__DetalleVe__idVen__1ED998B2] FOREIGN KEY([idVenta])
 REFERENCES [dbo].[Venta] ([idVenta])
+GO
+ALTER TABLE [dbo].[DetalleVenta] CHECK CONSTRAINT [FK__DetalleVe__idVen__1ED998B2]
 GO
 ALTER TABLE [dbo].[Producto]  WITH CHECK ADD  CONSTRAINT [FK_Producto_DepartamentoVenta] FOREIGN KEY([idDepartamentoVenta])
 REFERENCES [dbo].[DepartamentoVenta] ([idDepartamentoVenta])
@@ -244,7 +246,7 @@ REFERENCES [dbo].[Rol] ([idRol])
 GO
 ALTER TABLE [dbo].[Usuario] CHECK CONSTRAINT [FK__Usuario__idRol__060DEAE8]
 GO
-/****** Object:  StoredProcedure [dbo].[SP_ConsultarProductos]    Script Date: 12/06/2023 9:47:40 p. m. ******/
+/****** Object:  StoredProcedure [dbo].[SP_ConsultarProductos]    Script Date: 12/06/2023 10:47:31 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -256,7 +258,7 @@ SELECT *
 FROM Producto
 END
 GO
-/****** Object:  StoredProcedure [dbo].[SP_ConsultarProductosId]    Script Date: 12/06/2023 9:47:40 p. m. ******/
+/****** Object:  StoredProcedure [dbo].[SP_ConsultarProductosId]    Script Date: 12/06/2023 10:47:31 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -270,7 +272,7 @@ FROM Producto
 WHERE [idProducto] = @IdProducto
 END
 GO
-/****** Object:  StoredProcedure [dbo].[SP_CrearProducto]    Script Date: 12/06/2023 9:47:40 p. m. ******/
+/****** Object:  StoredProcedure [dbo].[SP_CrearProducto]    Script Date: 12/06/2023 10:47:31 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -304,9 +306,11 @@ INSERT INTO [dbo].[Producto]
            ,@Precio
            ,@EsActivo
 		   ,@FechaRegistro)
+
+		   SELECT SCOPE_IDENTITY()
 END
 GO
-/****** Object:  StoredProcedure [dbo].[SP_CrearUsuario]    Script Date: 12/06/2023 9:47:40 p. m. ******/
+/****** Object:  StoredProcedure [dbo].[SP_CrearUsuario]    Script Date: 12/06/2023 10:47:31 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -331,9 +335,37 @@ INSERT INTO [dbo].[Usuario]
            ,@IdRol
            ,@Clave
            ,@esActivo)
+
+		   SELECT SCOPE_IDENTITY()
 END
 GO
-/****** Object:  StoredProcedure [dbo].[SP_EditarProducto]    Script Date: 12/06/2023 9:47:40 p. m. ******/
+/****** Object:  StoredProcedure [dbo].[SP_CrearVenta]    Script Date: 12/06/2023 10:47:31 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SP_CrearVenta]
+	       @NumeroDocumento varchar(100),
+           @TipoPago varchar(50),
+           @FechaRegistro varchar(100),
+           @Total decimal(10,2)
+AS
+BEGIN 
+INSERT INTO [dbo].[Venta]
+           ([numeroDocumento]
+           ,[tipoPago]
+           ,[fechaRegistro]
+           ,[total])
+     VALUES
+           (@NumeroDocumento
+           ,@TipoPago
+           ,@FechaRegistro
+           ,@Total)
+
+		   SELECT SCOPE_IDENTITY()
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_EditarProducto]    Script Date: 12/06/2023 10:47:31 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -362,7 +394,7 @@ UPDATE [dbo].[Producto]
  WHERE [idProducto] = @IdProducto
 END
 GO
-/****** Object:  StoredProcedure [dbo].[SP_EditarUsuario]    Script Date: 12/06/2023 9:47:40 p. m. ******/
+/****** Object:  StoredProcedure [dbo].[SP_EditarUsuario]    Script Date: 12/06/2023 10:47:31 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -385,7 +417,7 @@ UPDATE [dbo].[Usuario]
  WHERE idUsuario = @idUsuario
 END
 GO
-/****** Object:  StoredProcedure [dbo].[SP_EliminarProducto]    Script Date: 12/06/2023 9:47:40 p. m. ******/
+/****** Object:  StoredProcedure [dbo].[SP_EliminarProducto]    Script Date: 12/06/2023 10:47:31 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -399,7 +431,7 @@ FROM Usuario
 WHERE [idUsuario] = @IdProducto
 END
 GO
-/****** Object:  StoredProcedure [dbo].[SP_EliminarUsuario]    Script Date: 12/06/2023 9:47:40 p. m. ******/
+/****** Object:  StoredProcedure [dbo].[SP_EliminarUsuario]    Script Date: 12/06/2023 10:47:31 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -413,7 +445,7 @@ FROM Usuario
 WHERE [idUsuario] = @idUsuario
 END
 GO
-/****** Object:  StoredProcedure [dbo].[SP_ListarRol]    Script Date: 12/06/2023 9:47:40 p. m. ******/
+/****** Object:  StoredProcedure [dbo].[SP_ListarRol]    Script Date: 12/06/2023 10:47:31 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -425,7 +457,7 @@ SELECT *
 FROM [dbo].[Rol]
 END
 GO
-/****** Object:  StoredProcedure [dbo].[SP_ListarUsuario]    Script Date: 12/06/2023 9:47:40 p. m. ******/
+/****** Object:  StoredProcedure [dbo].[SP_ListarUsuario]    Script Date: 12/06/2023 10:47:31 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -437,7 +469,7 @@ SELECT *
 FROM Usuario 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[SP_ObtenerUsuario]    Script Date: 12/06/2023 9:47:40 p. m. ******/
+/****** Object:  StoredProcedure [dbo].[SP_ObtenerUsuario]    Script Date: 12/06/2023 10:47:31 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -453,7 +485,7 @@ FROM Usuario
 WHERE [correo] = @email AND [clave] = @clave
 END
 GO
-/****** Object:  StoredProcedure [dbo].[SP_ObtenerUsuarioId]    Script Date: 12/06/2023 9:47:40 p. m. ******/
+/****** Object:  StoredProcedure [dbo].[SP_ObtenerUsuarioId]    Script Date: 12/06/2023 10:47:31 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -467,5 +499,6 @@ FROM Usuario
 WHERE [idUsuario] = @idUsuario
 END
 GO
+
 
 

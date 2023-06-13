@@ -25,7 +25,7 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
             }
         }
 
-        public async Task<IEnumerable<Producto>> Consultar(int idProducto)
+        public async Task<Producto> Consultar(int? idProducto)
         {
             using (var connection = _context.CreateConnection())
             {
@@ -33,8 +33,9 @@ namespace SistemaVentaCosmeticos.Repository.Implementacion
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("IdProducto", idProducto);
                 
-                return await connection.QueryAsync<Producto>("SP_ConsultarProductosId", parameters, commandType: CommandType.StoredProcedure);
+                var result = await connection.QueryAsync<Producto>("SP_ConsultarProductosId", parameters, commandType: CommandType.StoredProcedure);
 
+                return result.FirstOrDefault();
             }
         }
 
